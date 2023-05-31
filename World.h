@@ -41,17 +41,19 @@ public:
 				Part* p = new Part();
 				p->tag == f.Value;
 				parts.push_back(p);
+				continue;
 			}
+			std::vector<std::string> spl = Helper::split(f.Value, ",");
+			Part* p = findPart(spl[0]);
+			if (p == NULL)
+				continue;
 			if (f.Key == "part_add_semi")
 			{
-				std::vector<std::string> spl = Helper::split(f.Value, ",");
-				if (spl.size() != 6)
-					continue;
-				Part* p = findPart(spl[0]);
-				if (p == NULL)
+				if (spl.size() != 9)
 					continue;
 				Rectangle r = Rectangle(std::stof(spl[1]), std::stof(spl[2]), std::stof(spl[3]), std::stof(spl[4]));
-				p->semiParts.push_back(SemiParts(r, std::stof(spl[5])));
+				Color c = Color(std::stof(spl[6]), std::stof(spl[7]), std::stof(spl[8]), 255);
+				p->semiParts.push_back(SemiParts(r, std::stof(spl[5]), c));
 			}
 		}
 	}

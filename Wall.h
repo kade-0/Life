@@ -6,12 +6,14 @@
 
 struct SemiParts {
 	Rectangle p;
+	Color c;
 	float radius;
 
-	SemiParts(Rectangle r, float rad)
+	SemiParts(Rectangle r, float rad, Color _c)
 	{
 		p = r;
 		radius = rad;
+		c = _c;
 	}
 };
 
