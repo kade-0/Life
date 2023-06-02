@@ -26,13 +26,43 @@ int main()
 			if (edit)
 			{
 				DrawText("Edit mode enabled", 0, 0, 16, WHITE);
-				DrawText("F2 to enter block creation", 0, 18, 12, WHITE);
 
 				if (blockCreation)
 				{
+					static Part tempPart = Part("default_tag");
+					static SemiParts semipart = SemiParts({0,0,0,0}, 0, WHITE);
+					DrawText("Block Creation", 0, 18, 24, WHITE);
+					DrawText(("Tag: " + tempPart.tag).c_str(), 0, 42, 16, WHITE);
+					DrawText(("Semiparts: " + std::to_string(tempPart.semiParts.size())).c_str(), 0, 58, 16, WHITE);
+					Vector2 mousePos = GetMousePosition();
+					if (IsMouseButtonPressed(0))
+					{
+						if (IsKeyPressed(KEY_LEFT_CONTROL))
+						{
+							// find semi part and select it (todo)
+						}
+						semipart.p.x = mousePos.x;
+						semipart.p.y = mousePos.y;
+					}
+					if (IsMouseButtonDown(0))
+					{
+						semipart.p.width = std::abs(mousePos.x - semipart.p.x);
+						semipart.p.height = std::abs(mousePos.y - semipart.p.y);
+					}
+					if (IsMouseButtonReleased(0))
+					{
+						tempPart.semiParts.push_back(semipart);
+					}
 
+					DrawRectangleRounded(semipart.p, semipart.radius, 1, semipart.c);
+					for(SemiParts& sp : tempPart.semiParts)
+						DrawRectangleRounded(sp.p, sp.radius, 1, Color(sp.c.r, sp.c.g, sp.c.b, 128));
 					EndDrawing();
 					continue;
+				}
+				else
+				{
+					DrawText("F2 to enter block creation", 0, 18, 12, WHITE);
 				}
 			}
 

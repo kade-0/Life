@@ -56,5 +56,8 @@
     <ClInclude Include="DataFile.h">
       <Filter>Source Files\File</Filter>
     </ClInclude>
+    <ClInclude Include="SerializeHelper.h">
+      <Filter>Source Files\File</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

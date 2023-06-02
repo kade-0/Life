@@ -137,6 +137,7 @@
     <ClInclude Include="Creature.h" />
     <ClInclude Include="DataFile.h" />
     <ClInclude Include="Helpers.h" />
+    <ClInclude Include="SerializeHelper.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldConstants.h" />

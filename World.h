@@ -38,8 +38,8 @@ public:
 		{
 			if (f.Key == "part_create")
 			{
-				Part* p = new Part();
-				p->tag == f.Value;
+				Part* p = new Part("");
+				p->tag = f.Value;
 				parts.push_back(p);
 				continue;
 			}

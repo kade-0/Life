@@ -21,6 +21,11 @@ class Part {
 public:
 	std::vector<SemiParts> semiParts;
 	std::string tag;
+
+	Part(std::string _tag)
+	{
+		tag = _tag;
+	}
 };
 
 class Wall {
@@ -31,7 +36,7 @@ public:
 
 	std::string tag = "";
 
-	Part parts;
+	Part parts = Part("none");
 
 	Wall(int x, int y, int w, int h)
 	{
