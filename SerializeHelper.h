@@ -29,7 +29,8 @@ public:
 	{
 		std::vector<Field> fields;
 		fields.push_back(Field("wall_create", w->tag));
-		fields.push_back(Field("wall_pos", std::to_string(w->pos.x) +
+		fields.push_back(Field("wall_pos", 
+			std::to_string(w->pos.x) +
 			"," + std::to_string(w->pos.y) +
 			"," + std::to_string(w->pos.width) +
 			"," + std::to_string(w->pos.height)));
