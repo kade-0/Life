@@ -6,7 +6,7 @@
 #include <fstream>
 #include <sstream>
 
-std::string datafile_static_version = "v1;5;24;23#";
+std::string datafile_static_version = "version;1.6.2.23#";
 
 struct Field {
 public:
@@ -40,14 +40,15 @@ public:
 		int i = 0;
 		while (std::getline(f, line))
 		{
+			std::string key = line.substr(0, line.find_last_of(";"));
+			std::string value = line.substr(line.find_last_of(";") + 1, line.find_last_of("#"));
+
 			if (i == 0) // 1st line is always the version
 			{
-				version = line;
+				version = value;
 				continue;
 			}
 
-			std::string key = line.substr(0, line.find_last_of(";"));
-			std::string value = line.substr(line.find_last_of(";") + 1, line.find_last_of("#"));
 
 			fields.push_back(Field(key, value));
 

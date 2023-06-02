@@ -5,7 +5,7 @@
 #include "Wall.h"
 class SerializeHelper {
 public:
-	std::vector<Field> SerializePart(Part& p)
+	static std::vector<Field> SerializePart(Part& p)
 	{
 		std::vector<Field> fields;
 		fields.push_back(Field("part_create", p.tag));
@@ -25,7 +25,7 @@ public:
 		return fields;
 	}
 
-	std::vector<Field> SerializeWall(Wall* w)
+	static std::vector<Field> SerializeWall(Wall* w)
 	{
 		std::vector<Field> fields;
 		fields.push_back(Field("wall_create", w->tag));
