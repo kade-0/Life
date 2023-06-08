@@ -42,8 +42,9 @@ int main()
 					DrawText("Block Creation", 0, 18, 24, WHITE);
 					DrawText(("Tag: " + tempPart.tag).c_str(), 0, 42, 16, WHITE);
 					DrawText(("Semiparts: " + std::to_string(tempPart.semiParts.size())).c_str(), 0, 58, 16, WHITE);
-					DrawText(("Semipart Index: " + std::to_string(index)).c_str(), 0, 92, 16, WHITE);
-					DrawText("Press S to save", 0, 74, 16, WHITE);
+					DrawText(("Semipart Index: " + std::to_string(index)).c_str(), 0, 74, 16, WHITE);
+					DrawText(("Color: " + std::to_string(semipart.c.r) + "," + std::to_string(semipart.c.g) + "," + std::to_string(semipart.c.b)).c_str(), 0, 92, 16, semipart.c);
+					DrawText("Press S to save", 0, 108, 16, WHITE);
 					Vector2 mousePos = GetMousePosition();
 					Rectangle mousPosRec = { mousePos.x, mousePos.y, 16,16 };
 					if (IsMouseButtonPressed(0))
@@ -56,6 +57,26 @@ int main()
 						tempPart.semiParts.push_back(semipart);
 						semipart = SemiParts({ 0,0,0,0 }, 0, WHITE);
 						index = tempPart.semiParts.size() - 1;
+					}
+
+					// colors
+					if (IsKeyDown(KEY_LEFT_SHIFT))
+					{
+						if (IsKeyPressed(KEY_ONE))
+							semipart.c.r += semipart.c.r >= 255 ? -255 : 10;
+						if (IsKeyPressed(KEY_TWO))
+							semipart.c.g += semipart.c.g >= 255 ? -255 : 10;
+						if (IsKeyPressed(KEY_THREE))
+							semipart.c.b += semipart.c.b >= 255 ? -255 : 10;
+					}
+					if (IsKeyDown(KEY_LEFT_ALT))
+					{
+						if (IsKeyPressed(KEY_ONE))
+							semipart.c.r -= semipart.c.r < 0 ? 255 : 10;
+						if (IsKeyPressed(KEY_TWO))
+							semipart.c.g -= semipart.c.g < 0 ? 255 : 10;
+						if (IsKeyPressed(KEY_THREE))
+							semipart.c.b -= semipart.c.b < 0 ? 255 : 10;
 					}
 
 					if (index != -1 && IsKeyPressed(KEY_D))
