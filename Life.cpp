@@ -36,6 +36,7 @@ int main()
 
 				if (blockCreation)
 				{
+					static bool selected = false;
 					static Part tempPart = Part("default_tag");
 					static SemiParts semipart = SemiParts({0,0,0,0}, 0, WHITE);
 					static int index = -1;
@@ -54,9 +55,19 @@ int main()
 					}
 					if (IsMouseButtonPressed(1) && (semipart.p.x > 0 || semipart.p.y > 0))
 					{
-						tempPart.semiParts.push_back(semipart);
-						semipart = SemiParts({ 0,0,0,0 }, 0, WHITE);
-						index = tempPart.semiParts.size() - 1;
+						if (!selected)
+						{
+							tempPart.semiParts.push_back(semipart);
+							semipart = SemiParts({ 0,0,0,0 }, 0, WHITE);
+							index = tempPart.semiParts.size() - 1;
+						}
+						else
+						{
+							tempPart.semiParts[index] = semipart;
+							semipart = SemiParts({ 0,0,0,0 }, 0, WHITE);
+							selected = false;
+							index = -1;
+						}
 					}
 
 					// colors
@@ -89,6 +100,8 @@ int main()
 					if (IsKeyPressed(KEY_S))
 					{
 						w.df.fields.clear();
+						for (SemiParts& sp : tempPart.semiParts)
+							sp.c.a = 255;
 						for (Field f : SerializeHelper::SerializePart(tempPart))
 							w.df.fields.push_back(f);
 						w.df.Seriallize();
@@ -98,13 +111,20 @@ int main()
 					int i = 0;
 					for (SemiParts& sp : tempPart.semiParts)
 					{
-						DrawRectangleRounded(sp.p, sp.radius, 1, Color(sp.c.r, sp.c.g, sp.c.b, 128));
+						DrawRectangleRounded(sp.p, sp.radius, 1, Color(sp.c.r, sp.c.g, sp.c.b, sp.c.a));
 						DrawText(("(" + std::to_string(static_cast<int>(sp.p.x)) + "," + std::to_string(static_cast<int>(sp.p.y)) + ")").c_str(), sp.p.x, sp.p.y - 16, 16, BLUE);
-						if (IsKeyPressed(KEY_SPACE) && (CheckCollisionRecs(mousPosRec, sp.p)))
+						if (CheckCollisionRecs(mousPosRec, sp.p))
 						{
-							semipart = sp;
-							index = i;
+							sp.c.a = 220;
+							if (IsKeyPressed(KEY_SPACE))
+							{
+								semipart = sp;
+								index = i;
+								selected = true;
+							}
 						}
+						else
+							sp.c.a = 128;
 						i++;
 					}
 
